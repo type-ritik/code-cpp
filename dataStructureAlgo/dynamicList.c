@@ -1,35 +1,53 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stddef.h>
+
+typedef struct
+{
+    int *array;
+    size_t used;
+    size_t size;
+} Array;
+
+void initArray(Array *a, size_t initialSize)
+{
+    a->array = malloc(initialSize * sizeof(int));
+    a->used = 0;
+    a->size = initialSize;
+}
+
+void insertArray(Array *a, int element)
+{
+    if (a->used == a->size)
+    {
+        a->size *= 2;
+        a->array = realloc(a->array, a->size * sizeof(int));
+    }
+    a->array[a->used++] = element;
+}
+
+void freeArray(Array *a)
+{
+    free(a->array);
+    a->array = NULL;
+    a->used = a->size = 0;
+}
 
 int main(void)
 {
-    int capacity = 3;
-    int *list = malloc(capacity * sizeof(int));
 
-    if (list == NULL)
+    Array a;
+    int i;
+    int value = 201;
+
+    initArray(&a, 5); // initialize size to store 5 elements
+    for (i = 0; i < 100; i++, value++)
     {
-        return 1;
+        insertArray(&a, value); // automatically resizes as necessary
     }
-
-    list[0] = 3;
-    list[1] = 5;
-    list[2] = 8;
-
-    int *temp = realloc(list, 4 * sizeof(int));
-    if (temp == NULL)
-    {
-        free(list);
-        return 1;
-    }
-
-    temp[3] = 10;
-
-    for (int i = 0; i < 4; i++)
-    {
-        printf("%i\n", temp[i]);
-    }
-
-    free(list);
-
+    printf("%d\n", a.array[50]);
+    printf("%zu\n", a.used);
+    printf("%zu\n", a.size);
+    freeArray(&a);
     return 0;
 }
