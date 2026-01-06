@@ -15,16 +15,11 @@ int main(void)
     list[1] = 5;
     list[2] = 8;
 
-    int *temp = malloc(4 * sizeof(int));
+    int *temp = realloc(list, 4 * sizeof(int));
     if (temp == NULL)
     {
         free(list);
         return 1;
-    }
-
-    for (int i = 0; i < 3; i++)
-    {
-        temp[i] = list[i];
     }
 
     temp[3] = 10;
