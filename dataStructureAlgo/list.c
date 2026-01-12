@@ -72,6 +72,15 @@ int main()
     delete_at(9);
     traverse();
     delete_at(20);
+    delete_at(1);
+    traverse();
+    add(25);
+    add(26);
+    traverse();
+
+    printf("Deletion data based\n");
+    delete_data(5);
+    traverse();
     return 0;
 }
 
@@ -173,7 +182,16 @@ void delete_at(int pos)
 
     int count = 0;
     Node *current = head;
-    Node *previous;
+    Node *previous = NULL;
+
+    if (pos == 1)
+    {
+        head = current->next;
+        current->next = NULL;
+        free(current);
+        free(previous);
+        return;
+    }
 
     while (current->next != NULL && count != pos - 1)
     {
@@ -195,4 +213,44 @@ void delete_at(int pos)
     previous->next = current->next;
     current->next = NULL;
     free(current);
+}
+
+void delete_data(int data)
+{
+    if (head == NULL)
+    {
+        printf("List is NULL");
+        return;
+    }
+
+    if (head->data != data && head->next == NULL)
+    {
+        printf("Data {%d} not found in list\n", data);
+        return;
+    }
+
+    Node *curr = head;
+    Node *prev = NULL;
+
+    while (curr->next != NULL && curr->data != data)
+    {
+        if (curr->next->data == data)
+        {
+            prev = curr;
+        }
+        curr = curr->next;
+    }
+
+    printf("Previous%d\n", prev->data);
+    printf("Current%d\n", curr->data);
+
+    if (curr->data != data)
+    {
+        printf("Data {%d} not found in list\n", data);
+        return;
+    }
+
+    prev->next = curr->next;
+    curr->next = NULL;
+    free(curr);
 }
