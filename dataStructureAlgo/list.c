@@ -108,6 +108,17 @@ void add(int item)
 
 void traverse()
 {
+    if (head == NULL)
+    {
+        printf("List is NULL\n");
+        return;
+    }
+
+    if (head->next == NULL)
+    {
+        printf("%d->NULL\n", head->data);
+    }
+
     for (Node *temp = head; temp != NULL; temp = temp->next)
     {
         printf("%d->", temp->data);
