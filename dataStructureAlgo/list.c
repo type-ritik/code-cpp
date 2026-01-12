@@ -229,6 +229,13 @@ void delete_data(int data)
         return;
     }
 
+    if (head->next == NULL && head->data == data)
+    {
+        free(head);
+        head = NULL;
+        return;
+    }
+
     Node *curr = head;
     Node *prev = NULL;
 
@@ -240,9 +247,6 @@ void delete_data(int data)
         }
         curr = curr->next;
     }
-
-    printf("Previous%d\n", prev->data);
-    printf("Current%d\n", curr->data);
 
     if (curr->data != data)
     {
