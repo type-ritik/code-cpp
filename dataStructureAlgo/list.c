@@ -23,10 +23,14 @@ void insert_at(int, int);
 void delete_at(int);
 
 // Delete item
-void delete_data();
+void delete_data(int);
 
 // Traverse in list
 void traverse();
+
+void reverse();
+
+void recursiveReverse(Node *);
 
 int main()
 {
@@ -81,6 +85,15 @@ int main()
     printf("Deletion data based\n");
     delete_data(5);
     traverse();
+
+    printf("Reverse\n");
+    reverse();
+    traverse();
+
+    printf("Recursive reverse\n");
+    recursiveReverse(head);
+    traverse();
+
     return 0;
 }
 
@@ -268,4 +281,35 @@ void delete_data(int data)
     prev->next = curr->next;
     curr->next = NULL;
     free(curr);
+}
+
+void reverse()
+{
+    Node *prev = (Node *)malloc(sizeof(Node));
+    prev = NULL;
+    Node *next = head->next;
+    Node *curr = head;
+
+    for (; next != NULL; next = next->next)
+    {
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+    curr->next = prev;
+    head = curr;
+}
+
+void recursiveReverse(Node *temp)
+{
+    if (temp->next == NULL)
+    {
+        head = temp;
+        return;
+    }
+
+    recursiveReverse(temp->next);
+    Node *q = temp->next;
+    q->next = temp;
+    temp->next = NULL;
 }
