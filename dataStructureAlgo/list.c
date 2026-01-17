@@ -302,14 +302,16 @@ void reverse()
 
 void recursiveReverse(Node *temp)
 {
+    // Base case hit only once
     if (temp->next == NULL)
     {
         head = temp;
         return;
     }
-
-    recursiveReverse(temp->next);
-    Node *q = temp->next;
-    q->next = temp;
+    // Recursive Call
+    recursiveReverse(temp->next); // Function Call
+    // BackTracking
+    temp->next->next = temp;
     temp->next = NULL;
+    return;
 }
