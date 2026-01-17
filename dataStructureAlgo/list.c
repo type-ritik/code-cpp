@@ -32,6 +32,8 @@ void reverse();
 
 void recursiveReverse(Node *);
 
+void printInReverse(Node *);
+
 int main()
 {
 
@@ -93,6 +95,8 @@ int main()
     printf("Recursive reverse\n");
     recursiveReverse(head);
     traverse();
+    printf("Print in reverse order\n");
+    printInReverse(head);
 
     return 0;
 }
@@ -303,7 +307,7 @@ void reverse()
 void recursiveReverse(Node *temp)
 {
     // Base case hit only once
-    if (temp->next == NULL)
+    if (temp->next == NULL || temp == NULL)
     {
         head = temp;
         return;
@@ -314,4 +318,20 @@ void recursiveReverse(Node *temp)
     temp->next->next = temp;
     temp->next = NULL;
     return;
+}
+
+void printInReverse(Node *temp)
+{
+    if (temp->next == NULL || temp == NULL)
+    {
+        printf("\n%d->", temp->data);
+        return;
+    }
+    printInReverse(temp->next);
+    printf("%d->", temp->data);
+
+    if (temp == head)
+    {
+        printf("NULL\n");
+    }
 }
