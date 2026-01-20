@@ -98,6 +98,10 @@ int main()
     printf("Print in reverse order\n");
     printInReverse(head);
 
+    traverse();
+    insert_at(1111, 12);
+    traverse();
+
     return 0;
 }
 
@@ -177,14 +181,24 @@ void insert_at(int item, int pos)
         count++;
     }
 
+    if (count == pos - 2)
+    {
+        node->next = curr->next;
+        curr->next = node;
+        return;
+    }
+
+    if (count + 1 == pos - 1)
+    {
+        curr->next = node;
+        return;
+    }
+
     if (count != pos - 2)
     {
         printf("List length is small compared to {%d}\n", pos);
         return;
     }
-
-    node->next = curr->next;
-    curr->next = node;
 }
 
 void delete_at(int pos)
