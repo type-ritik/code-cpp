@@ -28,6 +28,10 @@ void deleteAtHead();
 
 void deleteAtTail();
 
+void deleteAtPosition(int);
+
+void deleteByData(int);
+
 int main(void)
 {
     head = NULL;
@@ -41,10 +45,13 @@ int main(void)
     traverse();
     insertAtPosition(8, 1111);
     traverse();
-    printf("Reverse Recursive traverse\n");
-    reverseRecursiveTraverse(head);
-    printf("Reverse Traverse\n");
-    reverseTraverse(head);
+    // printf("Reverse Recursive traverse\n");
+    // reverseRecursiveTraverse(head);
+    // printf("Reverse Traverse\n");
+    // reverseTraverse(head);
+    // deleteAtPosition(7);
+    // deleteByData(30);
+    traverse();
     return 0;
 }
 
@@ -271,4 +278,104 @@ void deleteAtTail()
     free(temp->next);
     temp->next = NULL;
     return;
+}
+
+void deleteAtPosition(int position)
+{
+    if (head == NULL)
+    {
+        printf("List is NULL, can't delete at position {%d}\n", position);
+        return;
+    }
+
+    if (position < 1)
+    {
+        printf("Invalid position {%d}\n", position);
+        return;
+    }
+
+    if (head->next == NULL && position != 1)
+    {
+        printf("List length is small, can't delete at position {%d}\n", position);
+        return;
+    }
+
+    if (head->next == NULL && position == 1)
+    {
+        free(head);
+        head = NULL;
+        return;
+    }
+
+    Node *temp = head;
+    int count = 0;
+
+    while ((temp->next != NULL) && (count != position - 1))
+    {
+        temp = temp->next;
+        count = count + 1;
+    }
+
+    if (count == position - 1)
+    {
+        temp->prev->next = temp->next;
+        if (temp->next != NULL)
+        {
+            temp->next->prev = temp->prev;
+        }
+        free(temp);
+        return;
+    }
+
+    if (count != position - 1)
+    {
+        printf("List length is small, can't delete at position {%d}\n", position);
+        return;
+    }
+}
+
+void deleteByData(int data)
+{
+    if (head == NULL)
+    {
+        printf("List is NULL, can't delete data {%d}\n", data);
+        return;
+    }
+
+    if (head->next == NULL && head->data != data)
+    {
+        printf("Data {%d} not found in list\n", data);
+        return;
+    }
+
+    if (head->next == NULL && head->data == data)
+    {
+        free(head);
+        head = NULL;
+        return;
+    }
+
+    Node *temp = head;
+
+    while ((temp->next != NULL) && (temp->data != data))
+    {
+        temp = temp->next;
+    }
+
+    if (temp->data == data)
+    {
+        temp->prev->next = temp->next;
+        if (temp->next != NULL)
+        {
+            temp->next->prev = temp->prev;
+        }
+        free(temp);
+        return;
+    }
+
+    if (temp->data != data)
+    {
+        printf("Data {%d} not found in list\n", data);
+        return;
+    }
 }
