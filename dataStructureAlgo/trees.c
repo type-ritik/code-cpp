@@ -15,6 +15,10 @@ BstNode *GetNewNode(int data);
 bool Search(BstNode *root, int data);
 int FindMax(BstNode *root);
 int FindMin(BstNode *root);
+int FindMaxRecursive(BstNode *root);
+int FindMinRecursive(BstNode *root);
+int FindSecondMin(BstNode *root);
+int FindSecondMax(BstNode *root);
 
 int main()
 {
@@ -44,6 +48,10 @@ int main()
 
     printf("%d is Maximum value in Tree\n", FindMax(root));
     printf("%d is Minimum value in Tree\n", FindMin(root));
+    printf("%d is Second Maximum value in Tree\n", FindSecondMax(root));
+    printf("%d is Second Minimum value in Tree\n", FindSecondMin(root));
+    printf("%d is Minimum value By Recursive\n", FindMinRecursive(root));
+    printf("%d is Maximum value By Recursive\n", FindMaxRecursive(root));
 
     return 0;
 }
@@ -136,5 +144,93 @@ int FindMin(BstNode *root)
             root = root->left;
         }
         return root->data;
+    }
+}
+
+int FindSecondMin(BstNode *root)
+{
+    if (root == NULL)
+    {
+        printf("Empty Tree\n");
+        return -1;
+    }
+    else if (root->left == NULL && root->right == NULL)
+    {
+        return root->data;
+    }
+    else
+    {
+        BstNode *current = root;
+        while (current->left->left != NULL)
+        {
+            current = current->left;
+        }
+        return current->data;
+    }
+}
+
+int FindSecondMax(BstNode *root)
+{
+    if (root == NULL)
+    {
+        printf("Empty Tree\n");
+        return -1;
+    }
+    else if (root->left == NULL && root->right == NULL)
+    {
+        return root->data;
+    }
+    else
+    {
+        BstNode *current = root;
+        while (current->right->right != NULL)
+        {
+            current = current->right;
+        }
+        return current->data;
+    }
+}
+
+int FindMinRecursive(BstNode *root)
+{
+    if (root == NULL)
+    {
+        printf("Empty Tree\n");
+        return -1;
+    }
+
+    if (root->left == NULL)
+    {
+        return root->data;
+    }
+    else if (root->left == NULL && root->right == NULL)
+    {
+        return root->data;
+    }
+    else
+    {
+        return FindMinRecursive(root->left);
+    }
+}
+
+int FindMaxRecursive(BstNode *root)
+{
+    if (root == NULL)
+    {
+        printf("Empty Tree\n");
+        return -1;
+    }
+
+    if (root->right == NULL)
+    {
+        return root->data;
+    }
+    else if (root->left == NULL && root->right == NULL)
+    {
+        return root->data;
+    }
+    else
+    {
+        return FindMaxRecursive(root->right);
     }
 }
