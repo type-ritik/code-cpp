@@ -13,6 +13,8 @@ typedef struct BstNode
 BstNode *InsertRecusive(BstNode *root, int data);
 BstNode *GetNewNode(int data);
 bool Search(BstNode *root, int data);
+int FindMax(BstNode *root);
+int FindMin(BstNode *root);
 
 int main()
 {
@@ -26,8 +28,12 @@ int main()
     root = InsertRecusive(root, 13);
     root = InsertRecusive(root, 23);
     root = InsertRecusive(root, 8);
+    root = InsertRecusive(root, 36);
+    root = InsertRecusive(root, 42);
+    root = InsertRecusive(root, 3);
+    root = InsertRecusive(root, 1);
 
-    if (Search(root, 35))
+    if (Search(root, 25))
     {
         printf("Found\n");
     }
@@ -35,6 +41,9 @@ int main()
     {
         printf("Not Found\n");
     }
+
+    printf("%d is Maximum value in Tree\n", FindMax(root));
+    printf("%d is Minimum value in Tree\n", FindMin(root));
 
     return 0;
 }
@@ -85,5 +94,47 @@ bool Search(BstNode *root, int data)
     {
         printf("%d GOES RIGHT\n", root->data);
         return Search(root->right, data);
+    }
+}
+
+int FindMax(BstNode *root)
+{
+    if (root == NULL)
+    {
+        printf("Empty tree\n");
+        return -1;
+    }
+    else if (root->left == NULL && root->right == NULL)
+    {
+        return root->data;
+    }
+    else
+    {
+        while (root->right != NULL)
+        {
+            root = root->right;
+        }
+        return root->data;
+    }
+}
+
+int FindMin(BstNode *root)
+{
+    if (root == NULL)
+    {
+        printf("Empty Tree\n");
+        return -1;
+    }
+    else if (root->left == NULL && root->right == NULL)
+    {
+        return root->data;
+    }
+    else
+    {
+        while (root->left != NULL)
+        {
+            root = root->left;
+        }
+        return root->data;
     }
 }
