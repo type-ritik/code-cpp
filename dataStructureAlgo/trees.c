@@ -19,6 +19,8 @@ int FindMaxRecursive(BstNode *root);
 int FindMinRecursive(BstNode *root);
 int FindSecondMin(BstNode *root);
 int FindSecondMax(BstNode *root);
+int FindHeight(BstNode *root);
+int max(int, int);
 
 int main()
 {
@@ -52,6 +54,8 @@ int main()
     printf("%d is Second Minimum value in Tree\n", FindSecondMin(root));
     printf("%d is Minimum value By Recursive\n", FindMinRecursive(root));
     printf("%d is Maximum value By Recursive\n", FindMaxRecursive(root));
+    printf("\n");
+    printf("%d is th height of Tree\n", FindHeight(root));
 
     return 0;
 }
@@ -232,5 +236,26 @@ int FindMaxRecursive(BstNode *root)
     else
     {
         return FindMaxRecursive(root->right);
+    }
+}
+
+int FindHeight(BstNode *root)
+{
+    if (root == NULL)
+    {
+        return -1;
+    }
+    return max(FindHeight(root->left), FindHeight(root->right)) + 1;
+}
+
+int max(int left, int right)
+{
+    if (left > right)
+    {
+        return left;
+    }
+    else
+    {
+        return right;
     }
 }
