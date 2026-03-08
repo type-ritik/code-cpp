@@ -21,6 +21,9 @@ int FindSecondMin(BstNode *root);
 int FindSecondMax(BstNode *root);
 int FindHeight(BstNode *root);
 int max(int, int);
+void PreOrderTraversal(BstNode *root);
+void InOrderTraversal(BstNode *root);
+void PostOrderTraversal(BstNode *root);
 
 int main()
 {
@@ -56,6 +59,12 @@ int main()
     printf("%d is Maximum value By Recursive\n", FindMaxRecursive(root));
     printf("\n");
     printf("%d is th height of Tree\n", FindHeight(root));
+    printf("\nPre-Order Traversal:\n");
+    PreOrderTraversal(root);
+    printf("\nIn-Order Traversal:\n");
+    InOrderTraversal(root);
+    printf("\nPost-Order Traversal:\n");
+    PostOrderTraversal(root);
 
     return 0;
 }
@@ -258,4 +267,40 @@ int max(int left, int right)
     {
         return right;
     }
+}
+
+void PreOrderTraversal(BstNode *root)
+{
+
+    if (root == NULL)
+    {
+        return;
+    }
+
+    printf("%d\n", root->data);
+    PreOrderTraversal(root->left);
+    PreOrderTraversal(root->right);
+}
+
+void InOrderTraversal(BstNode *root)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+    InOrderTraversal(root->left);
+    printf("%d\n", root->data);
+    InOrderTraversal(root->right);
+}
+
+void PostOrderTraversal(BstNode *root)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+
+    PostOrderTraversal(root->left);
+    PostOrderTraversal(root->right);
+    printf("%d\n", root->data);
 }
