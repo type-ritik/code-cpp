@@ -1,13 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
-typedef struct BstNode
-{
-    int data;
-    struct BstNode *left;
-    struct BstNode *right;
-} BstNode;
+#include "queue.h"
 
 // void Insert(int data);
 BstNode *InsertRecusive(BstNode *root, int data);
@@ -24,6 +18,7 @@ int max(int, int);
 void PreOrderTraversal(BstNode *root);
 void InOrderTraversal(BstNode *root);
 void PostOrderTraversal(BstNode *root);
+void LevelOrderTraversal(BstNode *root);
 
 int main()
 {
@@ -65,6 +60,8 @@ int main()
     InOrderTraversal(root);
     printf("\nPost-Order Traversal:\n");
     PostOrderTraversal(root);
+    printf("\nLevel-Order Traversal:\n");
+    LevelOrderTraversal(root);
 
     return 0;
 }
@@ -303,4 +300,34 @@ void PostOrderTraversal(BstNode *root)
     PostOrderTraversal(root->left);
     PostOrderTraversal(root->right);
     printf("%d\n", root->data);
+}
+
+void LevelOrderTraversal(BstNode *root)
+{
+
+    if (root == NULL)
+    {
+        printf("Tree is empty\n");
+        return;
+    }
+
+    Queue queue = {NULL, NULL};
+    enqueue(&queue, root);
+
+    while (!isEmpty(&queue))
+    {
+        BstNode *current = dequeue(&queue);
+
+        printf("%d\n", current->data);
+
+        if (current->left)
+        {
+            enqueue(&queue, current->left);
+        }
+
+        if (current->right)
+        {
+            enqueue(&queue, current->right);
+        }
+    }
 }
