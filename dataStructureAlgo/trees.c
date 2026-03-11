@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <limits.h>
 #include "queue.h"
 
 // void Insert(int data);
@@ -19,6 +20,9 @@ void PreOrderTraversal(BstNode *root);
 void InOrderTraversal(BstNode *root);
 void PostOrderTraversal(BstNode *root);
 void LevelOrderTraversal(BstNode *root);
+
+bool IsBinarySearchTree(BstNode *root);
+bool IsBstUtil(BstNode *root, int minValue, int maxValue);
 
 int main()
 {
@@ -62,6 +66,15 @@ int main()
     PostOrderTraversal(root);
     printf("\nLevel-Order Traversal:\n");
     LevelOrderTraversal(root);
+    printf("\nIs Binary Tree\n");
+    if (!IsBinarySearchTree(root))
+    {
+        printf("Not a Binary Search Tree\n");
+    }
+    else
+    {
+        printf("Is a Binary Search Tree\n");
+    }
 
     return 0;
 }
@@ -329,5 +342,35 @@ void LevelOrderTraversal(BstNode *root)
         {
             enqueue(&queue, current->right);
         }
+    }
+}
+
+bool IsBinarySearchTree(BstNode *root)
+{
+    if (root == NULL)
+    {
+        printf("Tree is empty\n");
+        return false;
+    }
+
+    return IsBstUtil(root, INT_MIN, INT_MAX);
+}
+
+bool IsBstUtil(BstNode *root, int minValue, int maxValue)
+{
+
+    if (root == NULL)
+    {
+        return true;
+    }
+    printf("Root DATA: %d - Min: %d - Max: %d\n", root->data, minValue, maxValue);
+
+    if (root->data > minValue && root->data < maxValue && IsBstUtil(root->left, minValue, root->data) && IsBstUtil(root->right, root->data, maxValue))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
     }
 }
