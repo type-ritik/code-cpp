@@ -20,9 +20,12 @@ void PreOrderTraversal(BstNode *root);
 void InOrderTraversal(BstNode *root);
 void PostOrderTraversal(BstNode *root);
 void LevelOrderTraversal(BstNode *root);
+BstNode *FindMinNode(BstNode *root);
 
 bool IsBinarySearchTree(BstNode *root);
 bool IsBstUtil(BstNode *root, int minValue, int maxValue);
+
+BstNode *Delete(BstNode *root, int data);
 
 int main()
 {
@@ -76,6 +79,9 @@ int main()
         printf("Is a Binary Search Tree\n");
     }
 
+    root = Delete(root, 20);
+    printf("In-Order Traversal after deleting node:\n");
+    InOrderTraversal(root);
     return 0;
 }
 
@@ -373,4 +379,64 @@ bool IsBstUtil(BstNode *root, int minValue, int maxValue)
     {
         return false;
     }
+}
+
+BstNode *FindMinNode(BstNode *root)
+{
+    if (root == NULL)
+    {
+        return NULL;
+    }
+
+    if (root->left)
+    {
+        return FindMinNode(root->left);
+    }
+    else
+    {
+        return root;
+    }
+}
+
+BstNode *Delete(BstNode *root, int data)
+{
+    if (root == NULL)
+    {
+        return NULL;
+    }
+    else if (data < root->data)
+    {
+        root->left = Delete(root->left, data);
+    }
+    else if (data > root->data)
+    {
+        root->right = Delete(root->right, data);
+    }
+    else
+    {
+        if (root->left == NULL && root->right == NULL)
+        {
+            free(root);
+            root = NULL;
+        }
+        else if (root->left == NULL)
+        {
+            BstNode *temp = root;
+            root = root->right;
+            free(temp);
+        }
+        else if (root->right == NULL)
+        {
+            BstNode *temp = root;
+            root = root->left;
+            free(temp);
+        }
+        else
+        {
+            BstNode *temp = FindMinNode(root->right);
+            root->data = temp->data;
+            root->right = Delete(root->right, temp->data);
+        }
+    }
+    return root;
 }
