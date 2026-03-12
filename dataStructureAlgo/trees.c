@@ -27,6 +27,9 @@ bool IsBstUtil(BstNode *root, int minValue, int maxValue);
 
 BstNode *Delete(BstNode *root, int data);
 
+BstNode *GetSuccessor(BstNode *root, int data);
+BstNode *Find(BstNode *root, int data);
+
 int main()
 {
     struct BstNode *root;
@@ -82,6 +85,17 @@ int main()
     root = Delete(root, 20);
     printf("In-Order Traversal after deleting node:\n");
     InOrderTraversal(root);
+
+    printf("Successor of Node 15\n");
+    BstNode *successor = GetSuccessor(root, 15);
+    if (successor != NULL)
+    {
+        printf("Successor of 15 is %d\n", successor->data);
+    }
+    else
+    {
+        printf("No successor found for 15\n");
+    }
     return 0;
 }
 
@@ -439,4 +453,57 @@ BstNode *Delete(BstNode *root, int data)
         }
     }
     return root;
+}
+
+BstNode *Find(BstNode *root, int data)
+{
+    if (root == NULL)
+    {
+        return NULL;
+    }
+    if (root->data < data)
+    {
+        return Find(root->right, data);
+    }
+    else if (root->data > data)
+    {
+        return Find(root->left, data);
+    }
+    else
+    {
+        return root;
+    }
+}
+
+BstNode *GetSuccessor(BstNode *root, int data)
+{
+    BstNode *current = Find(root, data);
+
+    if (current == NULL)
+    {
+        return NULL;
+    }
+
+    if (current->right != NULL)
+    {
+        return FindMinNode(current->right);
+    }
+    else
+    {
+        BstNode *succesor = NULL;
+        BstNode *ancestor = root;
+        while (ancestor != current)
+        {
+            if (current->data < ancestor->data)
+            {
+                succesor = ancestor;
+                ancestor = ancestor->left;
+            }
+            else
+            {
+                ancestor = ancestor->right;
+            }
+        }
+        return succesor;
+    }
 }
