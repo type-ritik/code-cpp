@@ -1,6 +1,7 @@
 import DoublyList from "./List/DoublyList";
 import LinkedList from "./List/LinkedLIst";
 import Stack from "./List/Stack";
+import Queue from "./List/Queue";
 
 // const list = new LinkedList();
 // list.append(1);
@@ -97,21 +98,57 @@ import Stack from "./List/Stack";
 // dlist.traverse();
 // console.log();
 
-const stack = new Stack();
+// const stack = new Stack();
 
-stack.push(5);
-stack.push(10);
-stack.push(15);
-stack.push(16);
-stack.push(18);
-stack.traverse();
-console.log(stack.size());
-console.log(stack.top());
-console.log(stack.search(10));
+// stack.push(5);
+//stack.push(10);
+//stack.push(15);
+//stack.push(16);
+//stack.push(18);
+//stack.traverse();
+//console.log(stack.size());
+//console.log(stack.top());
+//console.log(stack.search(10));
 
+//console.log();
+//stack.pop();
+//stack.traverse();
+//console.log(stack.size());
+// console.log(stack.top());
+// console.log(stack.search(18));
+
+
+const queue = new Queue();
+
+queue.enqueue(5);
+queue.enqueue(6);
+queue.enqueue(12);
+queue.enqueue(24);
+queue.enqueue(30);
+queue.enqueue(40);
+queue.traverse();
 console.log();
-stack.pop();
-stack.traverse();
-console.log(stack.size());
-console.log(stack.top());
-console.log(stack.search(18));
+
+queue.dequeue();
+queue.traverse();
+console.log();
+
+queue.dequeue();
+queue.traverse();
+console.log();
+
+queue.dequeue();
+queue.traverse();
+console.log();
+
+queue.dequeue();
+queue.traverse();
+console.log();
+
+console.log(queue.peek());
+console.log();
+
+console.log(queue.search(30));
+console.log();
+console.log(queue.size());
+
